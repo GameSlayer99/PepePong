@@ -5,35 +5,23 @@ from time import sleep
 from startup import Startup
 
 
-def check_events(player, pp_settings):
+def check_events(pp_settings):
     """Respond to key-presses and mouse events."""
     for event in pygame.event.get():
         if pp_settings.game_active:
-            pygame.mixer.music.unpause()
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    player.moving_up = True
-                elif event.key == pygame.K_DOWN:
-                    player.moving_down = True
-                elif event.key == pygame.K_SPACE:
+                if event.key == pygame.K_SPACE:
                     pp_settings.game_active = False
                     pygame.mixer.music.pause()
-            elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_UP:
-                    player.moving_up = False
-                elif event.key == pygame.K_DOWN:
-                    player.moving_down = False
-
         else:
-            player.moving_up = False
-            player.moving_down = False
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     pp_settings.game_active = True
+                    pygame.mixer.music.unpause()
 
 
 def update_screen(pp_settings, screen, player, enemy, ball):
@@ -62,8 +50,7 @@ def update_screen(pp_settings, screen, player, enemy, ball):
             player.game_over_player()
             enemy.game_over_enemy()
             sleep(1)
-            good_ending = mixer.Sound('sounds/good_ending1.wav')
-            good_ending.play()
+            pp_settings.good_ending.play()
             startup = Startup(screen, player, "Great Job!")
             update_screen_startup(screen, pp_settings, player, enemy, startup)
             sleep(3)
@@ -76,8 +63,7 @@ def update_screen(pp_settings, screen, player, enemy, ball):
             player.game_over_player()
             enemy.game_over_enemy()
             sleep(1)
-            bad_ending = mixer.Sound('sounds/bad_ending.wav')
-            bad_ending.play()
+            pp_settings.bad_ending.play()
             startup = Startup(screen, player, "Better luck next time!")
             update_screen_startup(screen, pp_settings, player, enemy, startup)
             sleep(2.5)
