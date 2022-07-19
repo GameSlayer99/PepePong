@@ -9,7 +9,7 @@ class Player:
         self.pp_settings = pp_settings
 
         # Load the player image and get its rect
-        self.image = pygame.image.load('images/peperight.png')
+        self.image = pygame.image.load('images/peperight.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
 
@@ -26,13 +26,8 @@ class Player:
 
     def update(self):
         """Update player's position based on movement flag."""
-        if self.moving_up and self.rect.top > self.screen_rect.top:
-            self.center -= self.pp_settings.player_speed_factor
-        if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
-            self.center += self.pp_settings.player_speed_factor
-
-        # Update rect object from self.center.
-        self.rect.centery = self.center
+        self.mx, self.my = pygame.mouse.get_pos()
+        self.rect.centery = self.my
 
     def game_over_player(self):
         self.center = 250
