@@ -1,6 +1,5 @@
 import pygame
 import random
-from pygame import mixer
 
 
 class Enemy:
@@ -15,7 +14,7 @@ class Enemy:
         self.player = player
 
         # Load the enemy image and get its rect.
-        self.image = pygame.image.load('images/pepeleft.png')
+        self.image = pygame.image.load('images/pepeleft.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
 
@@ -38,8 +37,7 @@ class Enemy:
             self.rect.centery += self.pp_settings.enemy_speed_factor
         if self.rect.colliderect(self.ball.rect):
             if abs(self.rect.right - self.ball.rect.left) <= 20:
-                paddle_hit = mixer.Sound('sounds/paddle_hit.wav')
-                paddle_hit.play()
+                self.pp_settings.paddle_hit.play()
                 self.pp_settings.ball_speed_factor_x = random.choice((10, 15))
                 if self.ball.rect.centery < 200:
                     self.pp_settings.ball_speed_factor_y = random.choice((1, 5, 10))
