@@ -1,4 +1,5 @@
 import pygame
+from pygame import mixer
 
 
 class Settings:
@@ -32,3 +33,15 @@ class Settings:
 
         # Game startup flag.
         self.game_active = False
+
+        # Game Sounds
+        self.paddle_hit = mixer.Sound('sounds/paddle_hit.wav')
+        self.wall_hit = mixer.Sound('sounds/wall_hit.wav')
+        self.score = mixer.Sound('sounds/good_ending.wav')
+        self.good_ending = mixer.Sound('sounds/good_ending1.wav')
+        self.bad_ending = mixer.Sound('sounds/bad_ending.wav')
+        pygame.mixer.Sound.set_volume(self.paddle_hit, 0.05)
+        pygame.mixer.Sound.set_volume(self.wall_hit, 0.05)
+        pygame.mixer.Sound.set_volume(self.score, 0.1)
+        pygame.mixer.Sound.set_volume(self.good_ending, 0.1)
+        pygame.mixer.Sound.set_volume(self.bad_ending, 0.1)
